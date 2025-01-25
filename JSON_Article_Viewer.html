@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Article Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #article {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    ul li {
+      background: #f9f9f9;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    ul li:hover {
+      background: #e8f5e9;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Article Viewer</h1>
+  </header>
+  <div id="article">
+    <h2 id="title"></h2>
+    <p><strong>Author ID:</strong> <span id="author"></span></p>
+    <p><strong>Comments:</strong></p>
+    <ul id="comments"></ul>
+  </div>
+  <footer>
+    <p>&copy; 2025 JSON Viewer. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // JSON Data
+    const jsonData = {
+      data: {
+        type: "articles",
+        id: "1",
+        attributes: {
+          title: "JSON:API paints my bikeshed!"
+        },
+        relationships: {
+          author: {
+            data: { type: "people", id: "9" }
+          },
+          comments: {
+            data: [
+              { type: "comments", id: "5" },
+              { type: "comments", id: "12" }
+            ]
+          }
+        }
+      }
+    };
+
+    // Populate the UI
+    document.getElementById("title").innerText = jsonData.data.attributes.title;
+    document.getElementById("author").innerText = jsonData.data.relationships.author.data.id;
+
+    const commentsList = document.getElementById("comments");
+    jsonData.data.relationships.comments.data.forEach(comment => {
+      const li = document.createElement("li");
+      li.innerText = `Comment ID: ${comment.id}`;
+      commentsList.appendChild(li);
+    });
+  </script>
+</body>
+</html>
